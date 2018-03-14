@@ -39,4 +39,9 @@ module.exports = {
 
     return true;
   },
+  async positions() {
+    const positionsQuery = await db.query('SELECT * FROM alberts_movements');
+
+    return positionsQuery.rows;
+  },
 };
