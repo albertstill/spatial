@@ -1,7 +1,6 @@
 const { formatError } = require('graphql/error');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const schema = require('./schema');
@@ -16,9 +15,6 @@ app.set('trust proxy', true);
 
 app.use(
   '/graphql',
-  cors({
-    origin: ['https://spatial.herokuapp.com', 'http://localhost:3000'],
-  }),
   graphqlHTTP({
     schema,
     rootValue,
