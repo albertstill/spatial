@@ -2,7 +2,7 @@ const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
   type Position {
-    timestamp: Float!
+    timestamp: String!
     latitude: Float!
     longitude: Float!
     accuracy: Float
@@ -14,7 +14,7 @@ module.exports = buildSchema(`
 
   type Query {
     addPosition(
-      timestamp: Float!
+      timestamp: String!
       latitude: Float!
       longitude: Float!
       accuracy: Float
