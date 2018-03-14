@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Albert Tracker</title>
+  </head>
+  <body>
+    <h1>Alberts watching you, sharpen up you mug</h1>
+    <ul></ul>
+    <script>
+      const ul = document.querySelector('ul');
+
+      function success({ coords, timestamp }) {
+        const node = document.createElement('li');
+        const textnode = document.createTextNode(
+          `timestamp: ${new Date(timestamp)}, latitude: ${coords.latitude}, longitude: ${
+            coords.longitude
+          }, accuracy: ${coords.accuracy}, altitude: ${coords.altitude}, altitudeAccuracy: ${
+            coords.altitudeAccuracy
+          }, heading: ${coords.heading}, speed: ${coords.speed}`,
+        );
+        node.appendChild(textnode);
+        ul.appendChild(node);
+
+        var query = `
+          query track(
+            $timestamp: Float!
+            $latitude: Float!
+            $longitude: Float!
+            $accuracy: Float
+            $altitude: Float
+            $altitudeAccuracy: Float
+            $heading: Float
+            $speed: Float
+          ) {
+            addPosition(
+              timestamp: $timestamp,
+              latitude: $latitude,
+              longitude: $longitude,
+              accuracy: $accuracy,
+              altitude: $altitude,
+              altitudeAccuracy: $altitudeAccuracy,
+              heading: $heading,
+              speed: $speed,
+            )
+          }
+        `;
+
+        fetch('graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: query,
+            variables: {
+              timestamp,
+              latitude: coords.latitude,
+              longitude: coords.longitude,
+              accuracy: coords.accuracy,
+              altitude: coords.altitude,
+              altitudeAccuracy: coords.altitudeAccuracy,
+              heading: coords.heading,
+              speed: coords.speed,
+            },
+          }),
+        }).then((res) => {
+          const node = document.createElement('li');
+          let textnode;
+
+          if (!res.ok) {
+            textnode = document.createTextNode('Failed GraphQL request.');
+          } else {
+            textnode = document.createTextNode('Successful GraphQL request.');
+          }
+
+          node.appendChild(textnode);
+          ul.appendChild(node);
+        }).catch(console.error);
+      }
+
+      function error(err) {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+      }
+
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: Infinity,
+      };
+
+      navigator.geolocation.watchPosition(success, error, options);
+    </script>
+  </body>
+</html>

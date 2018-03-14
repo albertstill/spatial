@@ -6,7 +6,7 @@
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./src/index.js",
-    "watch": "nodemon -w '.env' -w './src' -x 'node -r dotenv/config --inspect ./src/index.js'",
+    "watch": "nodemon -w '.env' -w './src' --ext js,html -x 'node -r dotenv/config --inspect ./src/index.js'",
     "tdd": "npm run unit -- -w",
     "lint": "eslint ./",
     "unit": "NODE_ENV=test mocha -r test/setup --timeout 15000 **/__tests__/**/*.js",
