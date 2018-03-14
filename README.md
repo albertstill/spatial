@@ -1,10 +1,1 @@
-### PostGres
-
-`postgres -D /usr/local/var/postgres`
-`createuser -P -s -e admin`
-`createdb spatial`
-`postgres://admin@localhost:5432\spatial`
-
-### Misc
-
-heroku run bash --app spatial
+Playing with the [Geolocation Web API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) for tracking purposes + GraphQL.
