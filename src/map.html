@@ -53,6 +53,24 @@
           }],
           map: map
         });
+
+        pointsArray.forEach(position => {
+          // new google.maps.Circle({
+          //   strokeColor: '#FF0000',
+          //   strokeOpacity: 0.2,
+          //   strokeWeight: 5,
+          //   fillColor: '#FF0000',
+          //   fillOpacity: 0.2,
+          //   map: map,
+          //   center,
+          //   radius: 30
+          // });
+
+          var marker = new google.maps.Marker({
+            position,
+            map: map
+          });
+        })
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPLmmAai2TtClclIMJHSIPWzUBZ8lPQIE&callback=initMap"></script>
